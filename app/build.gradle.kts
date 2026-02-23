@@ -5,6 +5,48 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    jacoco
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
+}
+
+tasks.register<JacocoReport>("jacocoTestReport") {
+    dependsOn("testDebugUnitTest")
+
+    reports {
+        xml.required = true
+        html.required = true
+    }
+
+    val excludes = listOf(
+        "**/R.class",
+        "**/R$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+        "android/**/*.*",
+        "**/Hilt_*.*",
+        "**/*_HiltModules*.*",
+        "**/*_Factory*.*",
+        "**/*_MembersInjector*.*",
+        "**/*Module_*Factory*.*",
+        "**/dagger/**",
+        "**/*Database_Impl*.*",
+        "**/*Dao_Impl*.*",
+        "**/ComposableSingletons*.*",
+    )
+
+    classDirectories.setFrom(
+        fileTree(layout.buildDirectory.dir("tmp/kotlin-classes/debug")) {
+            exclude(excludes)
+        }
+    )
+    sourceDirectories.setFrom(files("src/main/java", "src/main/kotlin"))
+    executionData.setFrom(
+        layout.buildDirectory.file("outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec")
+    )
 }
 
 android {
