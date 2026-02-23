@@ -1,4 +1,4 @@
-package com.spark.userbase.ui.theme
+package com.spark.userbase.common.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

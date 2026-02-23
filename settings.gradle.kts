@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "user-base"
 include(":app")
- 
+include(":common")
+include(":common-ui")
