@@ -17,6 +17,7 @@ navigationCompose = "2.8.5"
 mockk = "1.13.13"
 truth = "1.4.4"
 kotlinxSerialization = "1.7.3"
+jacoco = "0.8.12"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
