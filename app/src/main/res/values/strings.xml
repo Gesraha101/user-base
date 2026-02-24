@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">User Base</string>
+
+    <string name="title_add_user">Add User</string>
+    <string name="title_user_list">Users</string>
+
+    <string name="label_name">Name</string>
+    <string name="label_age">Age</string>
+    <string name="label_job_title">Job Title</string>
+    <string name="label_gender">Gender</string>
+
+    <string name="gender_male">Male</string>
+    <string name="gender_female">Female</string>
+
+    <string name="button_add">Add</string>
+
+    <string name="error_name_too_short">Name must be more than %d characters</string>
+    <string name="error_name_invalid_chars">Name must not contain digits or special characters</string>
+    <string name="error_age_not_a_number">Age must be a valid number</string>
+    <string name="error_age_too_young">Age must be more than %d</string>
+    <string name="error_age_too_old">Age must be less than %d</string>
+    <string name="error_job_title_required">Job title is required</string>
+    <string name="error_job_title_too_long">Job title must not exceed %d characters</string>
+    <string name="error_gender_not_selected">Please select a gender</string>
+    <string name="error_generic">Something went wrong</string>
+
+    <string name="label_no_users">No users added yet</string>
+    <string name="display_user_age">Age: %d</string>
+    <string name="display_user_job">Job: %s</string>
+    <string name="display_user_gender">Gender: %s</string>
 </resources>
