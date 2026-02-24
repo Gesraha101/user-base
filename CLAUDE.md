@@ -3,7 +3,6 @@ This is a Kotlin Android app targeting API 26+, using Jetpack Compose for UI.
 
 ## Modules
 - **app** — main Android application module
-- **common** — pure Kotlin module for shared utilities, extensions, and helpers used across all modules (no Android dependencies)
 - **common-ui** — Android module for shared Compose theme configuration (colors, typography, spacing) and reusable UI components
 
 ## Architecture
@@ -65,6 +64,6 @@ When creating a new feature, always scaffold the full package structure above, e
 - No deprecated Android APIs
 - Do not modify `build.gradle` without explaining why
 - Do not hardcode any dependency in `build.gradle`. Always add through `libs.versions.toml`
-- Do not place shared utilities inside feature modules — they belong in `common` or `common-ui`
+- Do not place shared utilities inside feature modules — they belong in `common-ui`
 - Do not define theme or design tokens inside feature modules — always import from `common-ui`
 - Do not add any comments unless instructed to do so
