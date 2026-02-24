@@ -20,32 +20,58 @@ feature/
 └── feature_name/
     ├── presentation/
     │   ├── viewmodel/
+    │   │   ├── state/
+    │   │   ├── event/
+    │   │   └── stateholder/
+    │   │       └── event/
     │   └── ui/
     │       ├── screen/
-    │       └── component/
+    │       ├── component/
+    │       └── stateholder/
     ├── domain/
     │   ├── model/
     │   ├── usecase/
     │   └── repo/
     └── data/
         ├── model/
+        ├── repo/
+        │   └── source/
         └── source/
             ├── local/
+            │   └── room/
             └── remote/
 ```
 
-- `presentation/viewmodel` — ViewModels, UI state classes (sealed), and UI events
+- `presentation/viewmodel` — ViewModels only
+- `presentation/viewmodel/state` — UI state classes (sealed) and `InputFieldState<E>` wrapper
+- `presentation/viewmodel/event` — UI events (inputs) and UI effects (one-shot outputs)
+- `presentation/viewmodel/stateholder` — `StateHolder` interface the ViewModel depends on
+- `presentation/viewmodel/stateholder/event` — `StateHolderEvent` sealed interface (field change + submit variants)
 - `presentation/ui/screen` — Top-level Composable screens, one per route
 - `presentation/ui/component` — Reusable Composables scoped to this feature only
+- `presentation/ui/stateholder` — `StateHolder` implementation and its `@ViewModelScoped` Hilt binding module
 - `domain/model` — Business/domain models, pure Kotlin data classes
 - `domain/usecase` — One class per use case, single `invoke` operator function
 - `domain/repo` — Repository interfaces (contracts), defined in domain, implemented in data
-- `data/repo` — Repository implementations from the domain
+- `data/repo` — Repository implementations (implement interfaces from `domain/repo`)
+- `data/repo/source` — Data source interfaces (contracts used by repositories; parallel to `domain/repo` for source abstraction)
 - `data/model` — DTOs, database entities, and mappers to/from domain models
-- `data/source/remote` — Remote (API services)
-- `data/source/local` — Local (DAOs) data sources
+- `data/source/local` — Local data source implementations (implement interfaces from `data/repo/source`)
+- `data/source/local/room` — Room DAO interfaces and `@Database` class
+- `data/source/remote` — Remote (API) data source implementations
 
 When creating a new feature, always scaffold the full package structure above, even if some packages start empty.
+
+## StateHolder Pattern
+For screens with form input, always create a `StateHolder`. Events flow UI → StateHolder → ViewModel → StateHolder (state update). The screen is fully dumb — it only reads state and calls lambdas stored in it.
+
+1. **`InputFieldState`** in `viewmodel/state/` — holds `value: String`, `isTouched: Boolean`, `error: String?`, computed `displayError`, and interaction lambdas `onChanged: (String) -> Unit` and `onFocusLost: (String) -> Unit`. UI calls these lambdas directly.
+2. **`Form` state** in `viewmodel/state/` — holds one `InputFieldState` per field plus `genderOptions`, `isFormValid`, `isSubmitting`, and `onSubmit: () -> Unit`. Screen reads it all; no logic in the screen.
+3. **`<Feature>StateHolderEvent`** sealed interface in `viewmodel/stateholder/event/` — one variant per field interaction and submit.
+4. **`<Feature>StateHolder`** interface in `viewmodel/stateholder/` — exposes `events: Flow<StateHolderEvent>`, `state: StateFlow<Form>`, per-field update methods `onXxxChanged(value, error)`, `setSubmitting`, `currentUser()/currentEntity()`, and `reset()`.
+5. **`<Feature>StateHolderImpl`** in `ui/stateholder/` — wires `InputFieldState` lambdas at construction to emit events via `Channel<StateHolderEvent>`; per-field update methods mutate `_state`; uses `StringUnwrapper` for string resource resolution.
+6. **ViewModel** — observes `stateHolder.events` in `init { viewModelScope.launch { observeStateHolderEvents() } }`; for each field event: validates, resolves error string via `StringUnwrapper`, calls `stateHolder.onXxxChanged(value, error)`; for Submit: calls `stateHolder.currentUser()`, invokes use case, emits effects.
+7. **Screen** — passes `form.field.onChanged` / `form.field.onFocusLost` directly to components; passes `form.onSubmit` to the submit button. No event dispatch or logic of any kind.
 
 ## Code Conventions
 - All new UI must use Jetpack Compose, no XML layouts
