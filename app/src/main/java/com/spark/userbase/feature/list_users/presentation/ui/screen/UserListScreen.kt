@@ -25,11 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.spark.userbase.R
 import com.spark.userbase.common.ui.theme.extraColors
+import com.spark.userbase.common.ui.theme.spacing
 import com.spark.userbase.feature.list_users.presentation.ui.component.UserItem
 import com.spark.userbase.feature.list_users.presentation.ui.component.UserListItem
 import com.spark.userbase.feature.list_users.presentation.viewmodel.ListUsersViewModel
@@ -86,7 +86,7 @@ private fun SuccessContent(state: ListUsersUiState.Success) {
             }
 
             FloatingActionButton(
-                modifier = Modifier.align(Alignment.BottomEnd).padding(end = 16.dp, bottom = 16.dp),
+                modifier = Modifier.align(Alignment.BottomEnd).padding(end = MaterialTheme.spacing.md, bottom = MaterialTheme.spacing.md),
                 onClick = state.onAddClicked
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)

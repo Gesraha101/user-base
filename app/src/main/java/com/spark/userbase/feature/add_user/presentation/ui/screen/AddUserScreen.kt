@@ -9,6 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -18,10 +19,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.spark.userbase.R
+import com.spark.userbase.common.ui.theme.spacing
 import com.spark.userbase.feature.add_user.presentation.ui.component.GenderDropdown
 import com.spark.userbase.feature.add_user.presentation.ui.component.ValidatedTextField
 import com.spark.userbase.feature.add_user.presentation.viewmodel.AddUserViewModel
@@ -50,9 +51,9 @@ fun AddUserScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = MaterialTheme.spacing.md, vertical = MaterialTheme.spacing.sm)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.smMd),
         ) {
             ValidatedTextField(
                 value = form.name.value,
@@ -89,7 +90,7 @@ fun AddUserScreen(
                 enabled = form.isFormValid && !form.isSubmitting,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp),
+                    .padding(top = MaterialTheme.spacing.xs),
             ) {
                 Text(stringResource(R.string.button_add))
             }

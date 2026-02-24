@@ -51,6 +51,7 @@ fun UserBaseTheme(
             userItemJobTitle = TextStyle(fontWeight = FontWeight.Medium, fontSize = 14.sp),
             userItemAge = TextStyle(fontSize = 48.sp),
         ),
+        LocalSpacing provides Spacing(),
     ) {
         MaterialTheme(
             colorScheme = colorScheme,

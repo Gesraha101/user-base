@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.dp
+import com.spark.userbase.common.ui.theme.spacing
 
 @Composable
 fun ValidatedTextField(
@@ -49,7 +49,7 @@ fun ValidatedTextField(
                 text = errorMessage,
                 color = MaterialTheme.colorScheme.error,
                 style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier.padding(start = 16.dp, top = 4.dp),
+                modifier = Modifier.padding(start = MaterialTheme.spacing.md, top = MaterialTheme.spacing.xs),
             )
         }
     }
