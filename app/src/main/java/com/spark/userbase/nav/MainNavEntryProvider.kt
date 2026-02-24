@@ -6,6 +6,7 @@ import androidx.navigation3.runtime.entryProvider
 import com.spark.userbase.AddUserRoute
 import com.spark.userbase.UserListRoute
 import com.spark.userbase.feature.add_user.presentation.ui.screen.AddUserScreen
+import com.spark.userbase.feature.list_users.presentation.ui.screen.UserListScreen
 
 fun getNavProvider(backStack: NavBackStack<NavKey>) = entryProvider {
     entry<AddUserRoute> {
@@ -14,6 +15,6 @@ fun getNavProvider(backStack: NavBackStack<NavKey>) = entryProvider {
         )
     }
     entry<UserListRoute> {
-        // TODO to be implemented
+        UserListScreen(onNavigateBackToAdd = { backStack.remove(UserListRoute) })
     }
 }

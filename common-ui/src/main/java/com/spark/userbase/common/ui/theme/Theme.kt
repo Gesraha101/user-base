@@ -8,7 +8,11 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -37,9 +41,21 @@ fun UserBaseTheme(
         else -> LightColorScheme
     }
 
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
-        content = content
-    )
+    CompositionLocalProvider(
+        LocalExtraColors provides ExtraColors(
+            maleLabel = MaleLabelColor,
+            femaleLabel = FemaleLabelColor,
+        ),
+        LocalExtraTypography provides ExtraTypography(
+            userItemName = TextStyle(fontWeight = FontWeight.Bold, fontSize = 24.sp),
+            userItemJobTitle = TextStyle(fontWeight = FontWeight.Medium, fontSize = 14.sp),
+            userItemAge = TextStyle(fontSize = 48.sp),
+        ),
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = Typography,
+            content = content,
+        )
+    }
 }

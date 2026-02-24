@@ -3,6 +3,7 @@
 
     <string name="title_add_user">Add User</string>
     <string name="title_user_list">Users</string>
+    <string name="title_list_users">Users</string>
 
     <string name="label_name">Name</string>
     <string name="label_age">Age</string>
@@ -28,4 +29,5 @@
     <string name="display_user_age">Age: %d</string>
     <string name="display_user_job">Job: %s</string>
     <string name="display_user_gender">Gender: %s</string>
+    <string name="retry">Retry</string>
 </resources>
